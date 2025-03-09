@@ -110,13 +110,13 @@ func CalculateForecast(input InputData) ForecastResult {
 			Label:    fmt.Sprintf("%s %d", monthName[:3], year),
 		}
 
-		// Check if minimum savings breached
-		if newSavings < input.MinAcceptableSavings {
+		// Check if minimum savings breached (only if minimum is set)
+		if input.MinAcceptableSavings > 0 && newSavings < input.MinAcceptableSavings {
 			monthlyData.Label += " (⚠️ Below minimum)"
 		}
 
-		// Check if target reached
-		if newSavings >= input.TargetSavings {
+		// Check if target reached (only if target is set)
+		if input.TargetSavings > 0 && newSavings >= input.TargetSavings {
 			monthlyData.Label += " (🎯 Target reached)"
 		}
 

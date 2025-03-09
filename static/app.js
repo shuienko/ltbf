@@ -75,8 +75,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const savings = parseFloat(document.getElementById('savings').value);
         const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value);
         const monthlySpendings = parseFloat(document.getElementById('monthlySpendings').value);
-        const targetSavings = parseFloat(document.getElementById('targetSavings').value);
-        const minAcceptableSavings = parseFloat(document.getElementById('minAcceptableSavings').value);
+        
+        // Handle optional fields - use null if empty
+        const targetSavingsInput = document.getElementById('targetSavings').value;
+        const minAcceptableSavingsInput = document.getElementById('minAcceptableSavings').value;
+        
+        const targetSavings = targetSavingsInput ? parseFloat(targetSavingsInput) : null;
+        const minAcceptableSavings = minAcceptableSavingsInput ? parseFloat(minAcceptableSavingsInput) : null;
+        
         const yearsToForecast = parseInt(document.getElementById('yearsToForecast').value);
         
         // Collect planned spendings
@@ -239,9 +245,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const labels = monthlyData.map(data => data.label);
         const savingsData = monthlyData.map(data => data.savings);
         
-        // Create target and minimum savings line datasets
-        const targetLine = Array(monthlyData.length).fill(inputData.targetSavings);
-        const minLine = Array(monthlyData.length).fill(inputData.minAcceptableSavings);
+        // Create datasets array with the main savings dataset
+        const datasets = [
+            {
+                label: 'Savings',
+                data: savingsData,
+                borderColor: 'rgba(52, 152, 219, 1)',
+                backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }
+        ];
+        
+        // Add target savings line if provided
+        if (inputData.targetSavings !== null) {
+            const targetLine = Array(monthlyData.length).fill(inputData.targetSavings);
+            datasets.push({
+                label: 'Target Savings',
+                data: targetLine,
+                borderColor: 'rgba(46, 204, 113, 1)',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0
+            });
+        }
+        
+        // Add minimum acceptable savings line if provided
+        if (inputData.minAcceptableSavings !== null) {
+            const minLine = Array(monthlyData.length).fill(inputData.minAcceptableSavings);
+            datasets.push({
+                label: 'Minimum Acceptable Savings',
+                data: minLine,
+                borderColor: 'rgba(231, 76, 60, 1)',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0
+            });
+        }
         
         // Destroy previous chart if exists
         if (savingsChart) {
@@ -253,35 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [
-                    {
-                        label: 'Savings',
-                        data: savingsData,
-                        borderColor: 'rgba(52, 152, 219, 1)',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Target Savings',
-                        data: targetLine,
-                        borderColor: 'rgba(46, 204, 113, 1)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        fill: false,
-                        pointRadius: 0
-                    },
-                    {
-                        label: 'Minimum Acceptable Savings',
-                        data: minLine,
-                        borderColor: 'rgba(231, 76, 60, 1)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        fill: false,
-                        pointRadius: 0
-                    }
-                ]
+                datasets: datasets
             },
             options: {
                 responsive: true,
