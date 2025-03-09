@@ -1,0 +1,167 @@
+/* Main styles for Budget Forecast application */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+h2 {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #3498db;
+}
+
+h3 {
+    margin: 20px 0 15px;
+    color: #2c3e50;
+}
+
+.form-section, .results-section {
+    margin-bottom: 40px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+#add-spending {
+    background-color: #2ecc71;
+}
+
+#add-spending:hover {
+    background-color: #27ae60;
+}
+
+.planned-spending-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.planned-spending-item .form-group {
+    flex: 1;
+    min-width: 120px;
+    margin-bottom: 5px;
+}
+
+.remove-spending {
+    background-color: #e74c3c;
+    margin-top: 25px;
+    height: 42px;
+}
+
+.remove-spending:hover {
+    background-color: #c0392b;
+}
+
+.chart-container {
+    margin-bottom: 30px;
+    height: 400px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.target-reached {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.minimum-breached {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .planned-spending-item {
+        flex-direction: column;
+    }
+    
+    .planned-spending-item .form-group {
+        width: 100%;
+    }
+}
