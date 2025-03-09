@@ -2,16 +2,25 @@ package main
 
 import (
 	"encoding/json"
+	"io/fs"
 	"net/http"
 )
 
-func serveHome(w http.ResponseWriter, r *http.Request) {
+func serveHome(w http.ResponseWriter, r *http.Request, templateFS fs.FS) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
 
-	http.ServeFile(w, r, "templates/index.html")
+	// Use the embedded file system to serve the index.html file
+	content, err := fs.ReadFile(templateFS, "index.html")
+	if err != nil {
+		http.Error(w, "Error reading template", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	w.Write(content)
 }
 
 func handleForecast(w http.ResponseWriter, r *http.Request) {

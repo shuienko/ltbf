@@ -18,7 +18,29 @@ Your friendly financial time machine that helps you peek into your financial fut
 - Go 1.16 or higher (if running locally)
 - Docker (if using containerized approach)
 
-### Running Locally
+### Command-Line Application
+
+LTBF can now be used as a standalone command-line application that embeds all static files and launches a browser window automatically.
+
+#### Building the Command-Line Application
+
+```bash
+# Build the command-line application
+go run build.go
+```
+
+This will create an executable file named `ltbf` (or `ltbf.exe` on Windows) in your current directory.
+
+#### Running the Command-Line Application
+
+```bash
+# Run the application
+./ltbf
+```
+
+The application will start a local web server and automatically open your default web browser to access the application.
+
+### Running Locally (Web Server)
 
 1. Clone the repository:
    ```
