@@ -388,6 +388,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             tableBody.appendChild(row);
         });
+        
+        // Scroll to the top of the table to show the earliest months
+        const tableContainer = document.querySelector('.table-container');
+        tableContainer.scrollTop = 0;
     }
     
     // Function to clear saved data (cookies)
