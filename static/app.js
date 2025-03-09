@@ -46,23 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const comment = savedData ? savedData.comment : '';
         
         spendingItem.innerHTML = `
-            <div class="form-group">
-                <label for="spend-month">Month</label>
-                <input type="number" class="spend-month" min="1" max="12" value="${currentMonth}" required>
+            <div class="form-group month-field">
+                <input type="number" class="spend-month" min="1" max="12" value="${currentMonth}" placeholder="Month" required>
             </div>
-            <div class="form-group">
-                <label for="spend-year">Year</label>
-                <input type="number" class="spend-year" min="${currentYear}" max="${currentYear + 50}" value="${currentYear}" required>
+            <div class="form-group year-field">
+                <input type="number" class="spend-year" min="${currentYear}" max="${currentYear + 50}" value="${currentYear}" placeholder="Year" required>
             </div>
-            <div class="form-group">
-                <label for="spend-amount">Amount (€)</label>
-                <input type="number" class="spend-amount" min="0" step="100" value="${amount}" required>
+            <div class="form-group amount-field">
+                <input type="number" class="spend-amount" min="0" step="100" value="${amount}" placeholder="Amount (€)" required>
             </div>
-            <div class="form-group">
-                <label for="spend-comment">Comment</label>
-                <input type="text" class="spend-comment" placeholder="e.g., Vacation, Car purchase" value="${comment}">
+            <div class="form-group comment-field">
+                <input type="text" class="spend-comment" placeholder="Comment" value="${comment}">
             </div>
-            <button type="button" class="remove-spending">Remove</button>
+            <button type="button" class="remove-spending">×</button>
         `;
         
         // Add remove button functionality

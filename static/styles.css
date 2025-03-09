@@ -116,6 +116,9 @@ button:hover {
 }
 
 #add-spending {
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-top: 10px;
     background-color: #2ecc71;
 }
 
@@ -141,25 +144,49 @@ button:hover {
 
 .planned-spending-item {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 15px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
     background-color: #fff;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .planned-spending-item .form-group {
+    margin-bottom: 0;
+}
+
+.month-field {
+    flex: 0 0 60px;
+}
+
+.year-field {
+    flex: 0 0 70px;
+}
+
+.amount-field {
+    flex: 0 0 100px;
+}
+
+.comment-field {
     flex: 1;
     min-width: 120px;
-    margin-bottom: 5px;
 }
 
 .remove-spending {
     background-color: #e74c3c;
-    margin-top: 30px;
-    height: 42px;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
 .remove-spending:hover {
@@ -206,6 +233,13 @@ tr:hover {
     font-weight: 600;
 }
 
+.planned-spending-item input[type="number"],
+.planned-spending-item input[type="text"] {
+    padding: 6px 8px;
+    height: 32px;
+    font-size: 14px;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .container {
@@ -221,10 +255,21 @@ tr:hover {
     }
     
     .planned-spending-item {
-        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 5px;
     }
     
-    .planned-spending-item .form-group {
-        width: 100%;
+    .month-field, .year-field, .amount-field {
+        flex: 1;
+        min-width: 60px;
+    }
+    
+    .comment-field {
+        flex: 1 0 100%;
+        order: 4;
+    }
+    
+    .remove-spending {
+        order: 5;
     }
 }
