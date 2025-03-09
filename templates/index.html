@@ -15,36 +15,36 @@
             <h2>Input Your Data</h2>
             <form id="budget-form">
                 <div class="form-group">
-                    <label for="savings">Current Savings ($):</label>
-                    <input type="number" id="savings" name="savings" min="0" step="0.01" required>
+                    <label for="savings">Current Savings:</label>
+                    <input type="number" id="savings" name="savings" min="0" step="1000" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="monthlyIncome">Monthly Income ($):</label>
-                    <input type="number" id="monthlyIncome" name="monthlyIncome" min="0" step="0.01" required>
+                    <label for="monthlyIncome">Monthly Income:</label>
+                    <input type="number" id="monthlyIncome" name="monthlyIncome" min="0" step="10" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="monthlySpendings">Monthly Spendings ($):</label>
-                    <input type="number" id="monthlySpendings" name="monthlySpendings" min="0" step="0.01" required>
+                    <label for="monthlySpendings">Monthly Spendings:</label>
+                    <input type="number" id="monthlySpendings" name="monthlySpendings" min="0" step="10" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="targetSavings">Target Savings ($):</label>
-                    <input type="number" id="targetSavings" name="targetSavings" min="0" step="0.01" required>
+                    <label for="targetSavings">Target Savings:</label>
+                    <input type="number" id="targetSavings" name="targetSavings" min="0" step="1000" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="minAcceptableSavings">Minimum Acceptable Savings ($):</label>
-                    <input type="number" id="minAcceptableSavings" name="minAcceptableSavings" min="0" step="0.01" required>
+                    <label for="minAcceptableSavings">Minimum Acceptable Savings:</label>
+                    <input type="number" id="minAcceptableSavings" name="minAcceptableSavings" min="0" step="1000" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="yearsToForecast">Years to Forecast:</label>
-                    <input type="number" id="yearsToForecast" name="yearsToForecast" min="1" max="50" step="1" required>
+                    <input type="number" id="yearsToForecast" name="yearsToForecast" min="1" max="20" step="1" value="6" required>
                 </div>
                 
-                <h3>Planned Spendings</h3>
+                <h3>Planned Spendings (Optional)</h3>
                 <div id="planned-spendings-container">
                     <!-- Dynamic fields will be added here -->
                 </div>
@@ -67,8 +67,8 @@
                     <thead>
                         <tr>
                             <th>Month-Year</th>
-                            <th>Savings ($)</th>
-                            <th>Spendings ($)</th>
+                            <th>Savings</th>
+                            <th>Spendings</th>
                             <th>Notes</th>
                         </tr>
                     </thead>

@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         generateForecast();
     });
     
-    // Add initial planned spending field
-    addPlannedSpendingField();
+    // No initial planned spending field - it's now optional
     
     // Function to add a planned spending field
     function addPlannedSpendingField() {
@@ -43,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="number" class="spend-year" min="${currentYear}" max="${currentYear + 50}" value="${currentYear}" required>
             </div>
             <div class="form-group">
-                <label for="spend-amount">Amount ($):</label>
-                <input type="number" class="spend-amount" min="0" step="0.01" required>
+                <label for="spend-amount">Amount:</label>
+                <input type="number" class="spend-amount" min="0" step="100" required>
             </div>
             <div class="form-group">
                 <label for="spend-comment">Comment:</label>
@@ -208,11 +207,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Savings ($)'
+                            text: 'Savings'
                         },
                         ticks: {
                             callback: function(value) {
-                                return '$' + value.toLocaleString();
+                                return '€' + value.toLocaleString();
                             }
                         }
                     },
@@ -236,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     label += ': ';
                                 }
                                 if (context.parsed.y !== null) {
-                                    label += '$' + context.parsed.y.toLocaleString(undefined, {
+                                    label += '€' + context.parsed.y.toLocaleString(undefined, {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2
                                     });
@@ -298,8 +297,8 @@ document.addEventListener('DOMContentLoaded', function() {
             row.className = rowClass;
             row.innerHTML = `
                 <td>${monthName} ${data.year}</td>
-                <td>$${formattedSavings}</td>
-                <td>${formattedSpending === '-' ? '-' : '$' + formattedSpending}</td>
+                <td>€${formattedSavings}</td>
+                <td>${formattedSpending === '-' ? '-' : '€' + formattedSpending}</td>
                 <td>${notes}</td>
             `;
             

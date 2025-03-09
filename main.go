@@ -16,7 +16,7 @@ type InputData struct {
 	TargetSavings        float64        `json:"targetSavings"`
 	MinAcceptableSavings float64        `json:"minAcceptableSavings"`
 	YearsToForecast      int            `json:"yearsToForecast"`
-	PlannedSpendings     []PlannedSpend `json:"plannedSpendings"`
+	PlannedSpendings     []PlannedSpend `json:"plannedSpendings,omitempty"`
 }
 
 // PlannedSpend represents a future planned spending
@@ -71,10 +71,13 @@ func CalculateForecast(input InputData) ForecastResult {
 	plannedSpendingsMap := make(map[string]float64)
 	plannedSpendingsCommentMap := make(map[string]string)
 
-	for _, spend := range input.PlannedSpendings {
-		key := fmt.Sprintf("%d-%d", spend.Year, spend.Month)
-		plannedSpendingsMap[key] = spend.Amount
-		plannedSpendingsCommentMap[key] = spend.Comment
+	// Only process planned spendings if they exist
+	if input.PlannedSpendings != nil {
+		for _, spend := range input.PlannedSpendings {
+			key := fmt.Sprintf("%d-%d", spend.Year, spend.Month)
+			plannedSpendingsMap[key] = spend.Amount
+			plannedSpendingsCommentMap[key] = spend.Comment
+		}
 	}
 
 	// Generate forecast data for each month
