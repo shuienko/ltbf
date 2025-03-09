@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const addSpendingBtn = document.getElementById('add-spending');
     const plannedSpendingsContainer = document.getElementById('planned-spendings-container');
     const resultsSection = document.getElementById('results-section');
+    const clearSavedDataBtn = document.getElementById('clear-saved-data');
     
     let savingsChart = null;
+    
+    // Load saved data from cookies when page loads
+    loadFormDataFromCookies();
     
     // Add planned spending entry
     addSpendingBtn.addEventListener('click', function() {
@@ -17,37 +21,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        // Save form data to cookies before generating forecast
+        saveFormDataToCookies();
         generateForecast();
+    });
+    
+    // Clear saved data
+    clearSavedDataBtn.addEventListener('click', function() {
+        clearSavedData();
     });
     
     // No initial planned spending field - it's now optional
     
     // Function to add a planned spending field
-    function addPlannedSpendingField() {
+    function addPlannedSpendingField(savedData = null) {
         const spendingItem = document.createElement('div');
         spendingItem.className = 'planned-spending-item';
         
         // Get current date for default values
         const currentDate = new Date();
-        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
-        const currentYear = currentDate.getFullYear();
+        const currentMonth = savedData ? savedData.month : currentDate.getMonth() + 1; // JavaScript months are 0-indexed
+        const currentYear = savedData ? savedData.year : currentDate.getFullYear();
+        const amount = savedData ? savedData.amount : '';
+        const comment = savedData ? savedData.comment : '';
         
         spendingItem.innerHTML = `
             <div class="form-group">
-                <label for="spend-month">Month:</label>
+                <label for="spend-month">Month</label>
                 <input type="number" class="spend-month" min="1" max="12" value="${currentMonth}" required>
             </div>
             <div class="form-group">
-                <label for="spend-year">Year:</label>
+                <label for="spend-year">Year</label>
                 <input type="number" class="spend-year" min="${currentYear}" max="${currentYear + 50}" value="${currentYear}" required>
             </div>
             <div class="form-group">
-                <label for="spend-amount">Amount:</label>
-                <input type="number" class="spend-amount" min="0" step="100" required>
+                <label for="spend-amount">Amount (€)</label>
+                <input type="number" class="spend-amount" min="0" step="100" value="${amount}" required>
             </div>
             <div class="form-group">
-                <label for="spend-comment">Comment:</label>
-                <input type="text" class="spend-comment" placeholder="e.g., Vacation, Car purchase">
+                <label for="spend-comment">Comment</label>
+                <input type="text" class="spend-comment" placeholder="e.g., Vacation, Car purchase" value="${comment}">
             </div>
             <button type="button" class="remove-spending">Remove</button>
         `;
@@ -100,6 +113,81 @@ document.addEventListener('DOMContentLoaded', function() {
             yearsToForecast: yearsToForecast,
             plannedSpendings: plannedSpendings
         };
+    }
+    
+    // Function to save form data to cookies
+    function saveFormDataToCookies() {
+        const formData = collectFormData();
+        
+        // Set expiration date for cookies (1 year)
+        const expirationDate = new Date();
+        expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+        const cookieOptions = "; expires=" + expirationDate.toUTCString() + "; path=/";
+        
+        // Save main form fields
+        document.cookie = "savings=" + formData.savings + cookieOptions;
+        document.cookie = "monthlyIncome=" + formData.monthlyIncome + cookieOptions;
+        document.cookie = "monthlySpendings=" + formData.monthlySpendings + cookieOptions;
+        document.cookie = "targetSavings=" + formData.targetSavings + cookieOptions;
+        document.cookie = "minAcceptableSavings=" + formData.minAcceptableSavings + cookieOptions;
+        document.cookie = "yearsToForecast=" + formData.yearsToForecast + cookieOptions;
+        
+        // Save planned spendings as JSON string
+        if (formData.plannedSpendings.length > 0) {
+            document.cookie = "plannedSpendings=" + encodeURIComponent(JSON.stringify(formData.plannedSpendings)) + cookieOptions;
+        } else {
+            // Clear planned spendings cookie if no planned spendings
+            document.cookie = "plannedSpendings=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+    }
+    
+    // Function to get cookie value by name
+    function getCookie(name) {
+        const cookieName = name + "=";
+        const cookies = document.cookie.split(';');
+        
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        
+        return null;
+    }
+    
+    // Function to load form data from cookies
+    function loadFormDataFromCookies() {
+        // Load main form fields
+        const savings = getCookie("savings");
+        const monthlyIncome = getCookie("monthlyIncome");
+        const monthlySpendings = getCookie("monthlySpendings");
+        const targetSavings = getCookie("targetSavings");
+        const minAcceptableSavings = getCookie("minAcceptableSavings");
+        const yearsToForecast = getCookie("yearsToForecast");
+        
+        // Set form field values if cookies exist
+        if (savings) document.getElementById('savings').value = savings;
+        if (monthlyIncome) document.getElementById('monthlyIncome').value = monthlyIncome;
+        if (monthlySpendings) document.getElementById('monthlySpendings').value = monthlySpendings;
+        if (targetSavings) document.getElementById('targetSavings').value = targetSavings;
+        if (minAcceptableSavings) document.getElementById('minAcceptableSavings').value = minAcceptableSavings;
+        if (yearsToForecast) document.getElementById('yearsToForecast').value = yearsToForecast;
+        
+        // Load planned spendings
+        const plannedSpendingsCookie = getCookie("plannedSpendings");
+        if (plannedSpendingsCookie) {
+            try {
+                const plannedSpendings = JSON.parse(decodeURIComponent(plannedSpendingsCookie));
+                
+                // Add planned spending fields with saved data
+                plannedSpendings.forEach(spending => {
+                    addPlannedSpendingField(spending);
+                });
+            } catch (error) {
+                console.error("Error parsing planned spendings from cookie:", error);
+            }
+        }
     }
     
     // Function to generate the forecast
@@ -304,5 +392,36 @@ document.addEventListener('DOMContentLoaded', function() {
             
             tableBody.appendChild(row);
         });
+    }
+    
+    // Function to clear saved data (cookies)
+    function clearSavedData() {
+        // List of all cookie names to clear
+        const cookieNames = [
+            "savings", 
+            "monthlyIncome", 
+            "monthlySpendings", 
+            "targetSavings", 
+            "minAcceptableSavings", 
+            "yearsToForecast", 
+            "plannedSpendings"
+        ];
+        
+        // Clear each cookie
+        cookieNames.forEach(name => {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        });
+        
+        // Reset form
+        form.reset();
+        
+        // Clear planned spendings container
+        plannedSpendingsContainer.innerHTML = '';
+        
+        // Hide results section
+        resultsSection.style.display = 'none';
+        
+        // Alert user
+        alert('All saved data has been cleared.');
     }
 });

@@ -44,6 +44,35 @@ h3 {
     margin-bottom: 40px;
 }
 
+/* Two-panel layout styles */
+.form-panels {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.left-panel, .right-panel {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.left-panel {
+    flex: 1;
+    min-width: 300px;
+}
+
+.right-panel {
+    flex: 1;
+    min-width: 300px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
@@ -55,6 +84,14 @@ label {
 }
 
 input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -86,14 +123,31 @@ button:hover {
     background-color: #27ae60;
 }
 
+#generate-forecast {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #3498db;
+}
+
+#clear-saved-data {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #e74c3c;
+}
+
+#clear-saved-data:hover {
+    background-color: #c0392b;
+}
+
 .planned-spending-item {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: #fff;
     border-radius: 4px;
     margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .planned-spending-item .form-group {
@@ -104,7 +158,7 @@ button:hover {
 
 .remove-spending {
     background-color: #e74c3c;
-    margin-top: 25px;
+    margin-top: 30px;
     height: 42px;
 }
 
@@ -152,9 +206,18 @@ tr:hover {
     font-weight: 600;
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
+    }
+    
+    .form-panels {
+        flex-direction: column;
+    }
+    
+    .left-panel, .right-panel {
+        width: 100%;
     }
     
     .planned-spending-item {
