@@ -56,18 +56,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="number" class="spend-amount" min="0" step="100" value="${amount}" placeholder="Amount (€)" required>
             </div>
             <div class="form-group comment-field">
-                <input type="text" class="spend-comment" placeholder="Comment" value="${comment}">
+                <input type="text" class="spend-comment" placeholder="Description" value="${comment}">
             </div>
-            <button type="button" class="remove-spending">×</button>
+            <button type="button" class="remove-spending" title="Remove this spending"><i class="fas fa-times"></i></button>
         `;
         
         // Add remove button functionality
         const removeBtn = spendingItem.querySelector('.remove-spending');
         removeBtn.addEventListener('click', function() {
-            plannedSpendingsContainer.removeChild(spendingItem);
+            // Add a fade-out animation before removing
+            spendingItem.style.opacity = '0';
+            spendingItem.style.transform = 'translateX(20px)';
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                plannedSpendingsContainer.removeChild(spendingItem);
+            }, 300);
         });
         
+        // Add a fade-in animation when adding
+        spendingItem.style.opacity = '0';
+        spendingItem.style.transform = 'translateX(-20px)';
         plannedSpendingsContainer.appendChild(spendingItem);
+        
+        // Trigger animation after element is added to DOM
+        setTimeout(() => {
+            spendingItem.style.opacity = '1';
+            spendingItem.style.transform = 'translateX(0)';
+        }, 10);
     }
     
     // Function to collect form data
@@ -227,6 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show results section
         resultsSection.style.display = 'block';
         
+        // Add a small delay before adding the visible class to trigger the animation
+        setTimeout(() => {
+            resultsSection.classList.add('visible');
+        }, 10);
+        
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth' });
         
@@ -305,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: {
                         beginAtZero: true,
                         title: {
-                            display: true,
+                            display: false,
                             text: 'Savings'
                         },
                         ticks: {
@@ -316,8 +337,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     x: {
                         title: {
-                            display: true,
-                            text: 'Month-Year'
+                            display: false,
+                            text: 'Time'
                         }
                     }
                 },
@@ -434,7 +455,12 @@ document.addEventListener('DOMContentLoaded', function() {
         plannedSpendingsContainer.innerHTML = '';
         
         // Hide results section
-        resultsSection.style.display = 'none';
+        resultsSection.classList.remove('visible');
+        
+        // Add a small delay before hiding the section to allow animation to complete
+        setTimeout(() => {
+            resultsSection.style.display = 'none';
+        }, 500);
         
         // Alert user
         alert('All saved data has been cleared.');

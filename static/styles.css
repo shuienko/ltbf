@@ -1,61 +1,110 @@
-/* Main styles for Budget Forecast application */
+/* Modern styles for Budget Forecast application */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+:root {
+    --primary-color: #4361ee;
+    --primary-light: #4895ef;
+    --primary-dark: #3f37c9;
+    --accent-color: #4cc9f0;
+    --success-color: #4ade80;
+    --warning-color: #fb8500;
+    --danger-color: #ef476f;
+    --text-color: #2b2d42;
+    --text-light: #6c757d;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --border-radius: 10px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f8f9fa;
+    color: var(--text-color);
+    background-color: var(--bg-color);
     padding: 20px;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 
 h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #2c3e50;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 2.5rem;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 2px;
 }
 
 h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    color: #3498db;
+    border-bottom: 2px solid #eee;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.8rem;
 }
 
 h3 {
     margin: 20px 0 15px;
-    color: #2c3e50;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1.3rem;
 }
 
 .form-section, .results-section {
     margin-bottom: 40px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Two-panel layout styles */
 .form-panels {
     display: flex;
     gap: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .left-panel, .right-panel {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.left-panel:hover, .right-panel:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .left-panel {
@@ -70,87 +119,125 @@ h3 {
 
 .form-actions {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    position: relative;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
 }
 
-input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+.optional-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: normal;
+    font-style: italic;
 }
 
-input[type="text"] {
+input[type="number"], input[type="text"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 16px;
+    transition: var(--transition);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+input[type="number"]:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #3498db;
+    padding: 12px 20px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 500;
     margin-top: 15px;
     margin-right: 10px;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 #add-spending {
-    padding: 8px 15px;
+    padding: 10px 15px;
     font-size: 14px;
-    margin-top: 10px;
-    background-color: #2ecc71;
+    margin-top: 15px;
+    background-color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#add-spending::before {
+    content: '+';
+    margin-right: 5px;
+    font-weight: bold;
 }
 
 #add-spending:hover {
-    background-color: #27ae60;
+    background-color: var(--primary-light);
 }
 
 #generate-forecast {
-    padding: 12px 25px;
+    padding: 14px 28px;
     font-size: 18px;
-    background-color: #3498db;
+    background-color: var(--primary-color);
+    min-width: 200px;
 }
 
 #clear-saved-data {
-    padding: 12px 25px;
+    padding: 14px 28px;
     font-size: 18px;
-    background-color: #e74c3c;
+    background-color: var(--danger-color);
+    min-width: 200px;
 }
 
 #clear-saved-data:hover {
-    background-color: #c0392b;
+    background-color: #e63946;
 }
 
 .planned-spending-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background-color: #fff;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    border-left: 3px solid var(--accent-color);
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.planned-spending-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .planned-spending-item .form-group {
@@ -175,7 +262,7 @@ button:hover {
 }
 
 .remove-spending {
-    background-color: #e74c3c;
+    background-color: var(--danger-color);
     color: white;
     width: 28px;
     height: 28px;
@@ -187,29 +274,39 @@ button:hover {
     align-items: center;
     justify-content: center;
     margin: 0;
+    transition: var(--transition);
 }
 
 .remove-spending:hover {
-    background-color: #c0392b;
+    background-color: #e63946;
+    transform: rotate(90deg);
 }
 
+/* Keep chart container styling as is to preserve the Spendings graph */
 .chart-container {
     margin-bottom: 30px;
     height: 400px;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    background-color: var(--card-bg);
+    box-shadow: var(--box-shadow);
 }
 
 .table-container {
     overflow-x: auto;
-    max-height: 500px; /* Height to show approximately 12 months */
+    max-height: 500px;
     overflow-y: auto;
     position: relative;
+    border-radius: var(--border-radius);
+    background-color: var(--card-bg);
+    box-shadow: var(--box-shadow);
 }
 
 .table-container table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .table-container thead {
@@ -219,39 +316,68 @@ button:hover {
 }
 
 .table-container th {
-    background-color: #f2f2f2;
-    box-shadow: 0 1px 0 0 #ddd;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+    font-weight: 500;
 }
 
 th, td {
-    padding: 12px 15px;
+    padding: 14px 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
 th {
     font-weight: 600;
 }
 
+tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
 tr:hover {
-    background-color: #f8f9fa;
+    background-color: rgba(67, 97, 238, 0.05);
 }
 
 .target-reached {
-    color: #2ecc71;
+    color: var(--success-color);
     font-weight: 600;
 }
 
 .minimum-breached {
-    color: #e74c3c;
+    color: var(--danger-color);
     font-weight: 600;
 }
 
 .planned-spending-item input[type="number"],
 .planned-spending-item input[type="text"] {
-    padding: 6px 8px;
-    height: 32px;
+    padding: 8px 12px;
     font-size: 14px;
+}
+
+/* Add a subtle animation to the results section when it appears */
+#results-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#results-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add a subtle pulse animation to the generate forecast button */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+#generate-forecast:hover {
+    animation: pulse 1s infinite;
+    background-color: var(--primary-dark);
 }
 
 /* Responsive styles */
@@ -262,6 +388,7 @@ tr:hover {
     
     .form-panels {
         flex-direction: column;
+        gap: 20px;
     }
     
     .left-panel, .right-panel {
@@ -270,16 +397,16 @@ tr:hover {
     
     .planned-spending-item {
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 8px;
     }
     
     .month-field, .year-field, .amount-field {
-        flex: 1;
-        min-width: 60px;
+        flex: 1 1 calc(33.333% - 8px);
+        min-width: 0;
     }
     
     .comment-field {
-        flex: 1 0 100%;
+        flex: 1 1 100%;
         order: 4;
     }
     
@@ -288,12 +415,26 @@ tr:hover {
     }
     
     .table-container {
-        max-height: 400px; /* Slightly smaller height on mobile */
+        max-height: 400px;
     }
     
     .table-container th, 
     .table-container td {
-        padding: 8px 10px;
+        padding: 10px;
         font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 }
