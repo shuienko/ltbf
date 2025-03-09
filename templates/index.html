@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Forecast</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Long-Term Budget Forecast</h1>
+        
+        <div class="form-section">
+            <form id="budget-form">
+                <div class="form-panels">
+                    <div class="left-panel">
+                        <h3><i class="fas fa-wallet"></i> Your Financial Data</h3>
+                        <div class="form-group">
+                            <label for="savings">Current Savings (€)</label>
+                            <input type="number" id="savings" name="savings" min="0" step="1000" placeholder="Enter your current savings" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monthlyIncome">Monthly Income (€)</label>
+                            <input type="number" id="monthlyIncome" name="monthlyIncome" min="0" step="10" placeholder="Enter your monthly income" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monthlySpendings">Monthly Spendings (€)</label>
+                            <input type="number" id="monthlySpendings" name="monthlySpendings" min="0" step="10" placeholder="Enter your monthly spendings" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="yearsToForecast">Years to Forecast</label>
+                            <input type="number" id="yearsToForecast" name="yearsToForecast" min="1" max="20" step="1" value="6" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="targetSavings">Target Savings (€) <span class="optional-label">(Optional)</span></label>
+                            <input type="number" id="targetSavings" name="targetSavings" min="0" step="1000" placeholder="Set a savings goal">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minAcceptableSavings">Minimum Acceptable Savings (€) <span class="optional-label">(Optional)</span></label>
+                            <input type="number" id="minAcceptableSavings" name="minAcceptableSavings" min="0" step="1000" placeholder="Set a minimum threshold">
+                        </div>
+                    </div>
+                    
+                    <div class="right-panel">
+                        <h3><i class="fas fa-calendar-alt"></i> Planned Spendings <span class="optional-label">(Optional)</span></h3>
+                        <div id="planned-spendings-container">
+                            <!-- Dynamic fields will be added here -->
+                        </div>
+                        
+                        <button type="button" id="add-spending">Add Planned Spending</button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="generate-forecast"><i class="fas fa-chart-line"></i> Generate Forecast</button>
+                    <button type="button" id="clear-saved-data"><i class="fas fa-trash-alt"></i> Clear Saved Data</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="results-section" id="results-section" style="display: none;">
+            <h2><i class="fas fa-chart-bar"></i> Forecast Results</h2>
+            
+            <div class="chart-container">
+                <canvas id="savings-chart"></canvas>
+            </div>
+            
+            <div class="table-container">
+                <h3><i class="fas fa-table"></i> Monthly Breakdown</h3>
+                <table id="forecast-table">
+                    <thead>
+                        <tr>
+                            <th>Month-Year</th>
+                            <th>Savings</th>
+                            <th>Spendings</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="forecast-table-body">
+                        <!-- Results will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>
